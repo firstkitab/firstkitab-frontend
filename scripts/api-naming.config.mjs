@@ -22,6 +22,7 @@ export const OPERATION_NAME_MAP = {
   'GET /auth/callback': 'handleCallback',
   'POST /auth/logout': 'logout',
   'GET /auth/is-authenticated': 'isAuthenticated',
+  'POST /api/v1/schools/{school_id}/students/{student_id}:list-guardians': 'listStudentGuardians',
 };
 
 /**

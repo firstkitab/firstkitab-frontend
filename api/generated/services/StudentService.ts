@@ -246,7 +246,7 @@ export class StudentService {
      * @returns GuardianReadSchema Successful Response
      * @throws ApiError
      */
-    public static createStudent3({
+    public static listStudentGuardians({
         studentId,
         schoolId,
     }: {
