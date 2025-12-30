@@ -1,37 +1,31 @@
 'use client';
 import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { MdPerson } from 'react-icons/md';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import ImageUploader from '@/components/common/ImageUploader';
 import { useStaffEnroll } from '../../context/StaffEnrollContext';
+import { step1Schema } from '../../schemas/staffEnrollmentSchema';
+import { z } from 'zod';
+import { SectionCard } from '../../components/SectionCard';
+
+type Step1FormData = z.infer<typeof step1Schema>;
 
 const labelClass = 'text-xs font-semibold text-muted-foreground';
 
-const SectionCard = ({
-  title,
-  subtitle,
-  icon,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) => (
-  <section className="rounded-2xl border border-border/70 bg-card/70 shadow-sm">
-    <header className="flex flex-col gap-1 border-b border-border/80 px-6 py-4">
-      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-        {icon}
-        {title}
-      </div>
-      {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-    </header>
-    <div className="px-6 py-5 space-y-4">{children}</div>
-  </section>
-);
-
 export const StaffEnrollProfileSection = () => {
-  const { data, updateField } = useStaffEnroll();
+  const {
+    control,
+    setValue,
+    formState: { errors },
+  } = useFormContext<Step1FormData>();
+  const { step1Data, updateStep1Data } = useStaffEnroll();
+
+  const handleImageChange = (value: string | null) => {
+    setValue('profileImage', value || '', { shouldValidate: false });
+    updateStep1Data({ profileImage: value || '' });
+  };
 
   return (
     <SectionCard
@@ -39,38 +33,73 @@ export const StaffEnrollProfileSection = () => {
       subtitle="Provide the full legal name and identification preferences."
       icon={<MdPerson className="text-primary" />}
     >
+      <div className="mb-6 flex justify-center">
+        <ImageUploader value={step1Data.profileImage || null} onChange={handleImageChange} />
+      </div>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         <div className="flex flex-col gap-1">
-          <label className={labelClass}>First Name *</label>
-          <Input
-            placeholder="John"
-            value={data.firstName}
-            onChange={(e) => updateField('firstName', e.target.value)}
+          <label className={labelClass}>
+            First Name<span className="text-red-500"> *</span>
+          </label>
+          <Controller
+            name="firstName"
+            control={control}
+            render={({ field }) => (
+              <Input
+                placeholder="John"
+                {...field}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
           />
+          {errors.firstName && <p className="text-xs text-red-500">{errors.firstName.message}</p>}
         </div>
         <div className="flex flex-col gap-1">
           <label className={labelClass}>Middle Name</label>
-          <Input
-            placeholder="Quincy"
-            value={data.middleName}
-            onChange={(e) => updateField('middleName', e.target.value)}
+          <Controller
+            name="middleName"
+            control={control}
+            render={({ field }) => (
+              <Input
+                placeholder="Quincy"
+                {...field}
+                value={field.value || ''}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
           />
         </div>
         <div className="flex flex-col gap-1">
-          <label className={labelClass}>Last Name *</label>
-          <Input
-            placeholder="Doe"
-            value={data.lastName}
-            onChange={(e) => updateField('lastName', e.target.value)}
+          <label className={labelClass}>
+            Last Name<span className="text-red-500"> *</span>
+          </label>
+          <Controller
+            name="lastName"
+            control={control}
+            render={({ field }) => (
+              <Input
+                placeholder="Doe"
+                {...field}
+                onChange={(e) => field.onChange(e.target.value)}
+              />
+            )}
           />
+          {errors.lastName && <p className="text-xs text-red-500">{errors.lastName.message}</p>}
         </div>
       </div>
       <div className="flex flex-col gap-1">
         <label className={labelClass}>About Me</label>
-        <Textarea
-          placeholder="Short summary, accolades, etc."
-          value={data.aboutMe}
-          onChange={(e) => updateField('aboutMe', e.target.value)}
+        <Controller
+          name="aboutMe"
+          control={control}
+          render={({ field }) => (
+            <Textarea
+              placeholder="Short summary, accolades, etc."
+              {...field}
+              value={field.value || ''}
+              onChange={(e) => field.onChange(e.target.value)}
+            />
+          )}
         />
       </div>
     </SectionCard>

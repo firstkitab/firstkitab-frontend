@@ -2,11 +2,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { MdEdit, MdWork } from 'react-icons/md';
-import { useStaffEnroll } from '../../context/StaffEnrollContext';
+import { Step2FormData } from '../../schemas/staffEnrollmentSchema';
 
-export const StaffEnrollProfessionalSummary = () => {
-  const { data } = useStaffEnroll();
+interface StaffEnrollProfessionalSummaryProps {
+  data: Step2FormData;
+}
 
+export const StaffEnrollProfessionalSummary = ({ data }: StaffEnrollProfessionalSummaryProps) => {
   return (
     <div className="bg-card rounded-lg shadow border border-border overflow-hidden">
       <div className="bg-muted/50 px-6 py-4 border-b border-border">

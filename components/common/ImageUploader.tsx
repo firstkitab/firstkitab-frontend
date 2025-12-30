@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { MdCloudUpload, MdDelete } from 'react-icons/md';
+import { MdDelete, MdPerson } from 'react-icons/md';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 interface ImageUploaderProps {
@@ -38,34 +38,36 @@ export default function ImageUploader({ value, onChange, disabled }: ImageUpload
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <Avatar className="h-32 w-32 border-2 border-dashed border-muted-foreground/30">
-        <AvatarImage src={preview || ''} className="object-cover" />
-        <AvatarFallback className="bg-muted">
-          <MdCloudUpload className="h-10 w-10 text-muted-foreground" />
-        </AvatarFallback>
-      </Avatar>
+      <div className="relative group">
+        <Avatar className="h-32 w-32 border-2 border-dashed border-muted-foreground/30">
+          <AvatarImage src={preview || undefined} className="object-cover" />
+          <AvatarFallback className="bg-muted">
+            <MdPerson className="h-10 w-10 text-muted-foreground" />
+          </AvatarFallback>
+        </Avatar>
+        {preview && !disabled && (
+          <Button
+            type="button"
+            variant="secondary"
+            size="icon"
+            className="absolute inset-0 m-auto h-10 w-10 rounded-full opacity-0 group-hover:opacity-100 transition-opacity bg-background/80 backdrop-blur-sm shadow-sm hover:bg-background"
+            onClick={handleRemove}
+          >
+            <MdDelete className="h-5 w-5 text-foreground" />
+          </Button>
+        )}
+      </div>
 
       {!disabled && (
-        <div className="flex gap-2">
+        <>
           <Button
             type="button"
             variant="outline"
             size="sm"
             onClick={() => fileInputRef.current?.click()}
           >
-            Upload Photo
+            {preview ? 'Change Photo' : 'Upload Photo'}
           </Button>
-          {preview && (
-            <Button
-              type="button"
-              variant="destructive"
-              size="icon"
-              className="h-9 w-9"
-              onClick={handleRemove}
-            >
-              <MdDelete className="h-4 w-4" />
-            </Button>
-          )}
           <input
             type="file"
             ref={fileInputRef}
@@ -73,7 +75,7 @@ export default function ImageUploader({ value, onChange, disabled }: ImageUpload
             accept="image/*"
             onChange={handleFileChange}
           />
-        </div>
+        </>
       )}
     </div>
   );

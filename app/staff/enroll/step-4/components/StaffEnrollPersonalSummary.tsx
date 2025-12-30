@@ -2,11 +2,13 @@
 import React from 'react';
 import Link from 'next/link';
 import { MdEmail, MdEdit, MdPerson, MdPhone, MdLocationOn } from 'react-icons/md';
-import { useStaffEnroll } from '../../context/StaffEnrollContext';
+import { Step1FormData } from '../../schemas/staffEnrollmentSchema';
 
-export const StaffEnrollPersonalSummary = () => {
-  const { data } = useStaffEnroll();
+interface StaffEnrollPersonalSummaryProps {
+  data: Step1FormData;
+}
 
+export const StaffEnrollPersonalSummary = ({ data }: StaffEnrollPersonalSummaryProps) => {
   return (
     <div className="bg-card rounded-lg shadow border border-border overflow-hidden">
       <div className="bg-muted/50 px-6 py-4 border-b border-border">

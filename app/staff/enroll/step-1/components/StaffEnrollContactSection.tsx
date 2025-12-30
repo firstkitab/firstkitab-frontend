@@ -1,37 +1,22 @@
 'use client';
 import React from 'react';
+import { Controller, useFormContext } from 'react-hook-form';
 import { MdContacts, MdLocationOn, MdPhoneIphone, MdAlternateEmail } from 'react-icons/md';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { useStaffEnroll } from '../../context/StaffEnrollContext';
+import { step1Schema } from '../../schemas/staffEnrollmentSchema';
+import { z } from 'zod';
+import { SectionCard } from '../../components/SectionCard';
+
+type Step1FormData = z.infer<typeof step1Schema>;
 
 const labelClass = 'text-xs font-semibold text-muted-foreground';
 
-const SectionCard = ({
-  title,
-  subtitle,
-  icon,
-  children,
-}: {
-  title: string;
-  subtitle?: string;
-  icon: React.ReactNode;
-  children: React.ReactNode;
-}) => (
-  <section className="rounded-2xl border border-border/70 bg-card/70 shadow-sm">
-    <header className="flex flex-col gap-1 border-b border-border/80 px-6 py-4">
-      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted-foreground">
-        {icon}
-        {title}
-      </div>
-      {subtitle && <p className="text-sm text-muted-foreground">{subtitle}</p>}
-    </header>
-    <div className="px-6 py-5 space-y-4">{children}</div>
-  </section>
-);
-
 export const StaffEnrollContactSection = () => {
-  const { data, updateField } = useStaffEnroll();
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<Step1FormData>();
 
   return (
     <SectionCard
@@ -47,32 +32,67 @@ export const StaffEnrollContactSection = () => {
         <div className="grid grid-cols-1 gap-4">
           <div className="flex flex-col gap-1">
             <label className={labelClass}>Full Address</label>
-            <Textarea
-              placeholder="Street address, P.O. box, apartment, suite, unit, etc."
-              value={data.address}
-              onChange={(e) => updateField('address', e.target.value)}
+            <Controller
+              name="address"
+              control={control}
+              render={({ field }) => (
+                <Textarea
+                  placeholder="Street address, P.O. box, apartment, suite, unit, etc."
+                  {...field}
+                  value={field.value || ''}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
             />
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Input
-              placeholder="City"
-              value={data.city}
-              onChange={(e) => updateField('city', e.target.value)}
+            <Controller
+              name="city"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="City"
+                  {...field}
+                  value={field.value || ''}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
             />
-            <Input
-              placeholder="State / Province"
-              value={data.state}
-              onChange={(e) => updateField('state', e.target.value)}
+            <Controller
+              name="state"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="State / Province"
+                  {...field}
+                  value={field.value || ''}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
             />
-            <Input
-              placeholder="ZIP / Postal Code"
-              value={data.zip}
-              onChange={(e) => updateField('zip', e.target.value)}
+            <Controller
+              name="zip"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="ZIP / Postal Code"
+                  {...field}
+                  value={field.value || ''}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
             />
-            <Input
-              placeholder="Country"
-              value={data.country}
-              onChange={(e) => updateField('country', e.target.value)}
+            <Controller
+              name="country"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  placeholder="Country"
+                  {...field}
+                  value={field.value || ''}
+                  onChange={(e) => field.onChange(e.target.value)}
+                />
+              )}
             />
           </div>
         </div>
@@ -87,13 +107,20 @@ export const StaffEnrollContactSection = () => {
               <div className="space-y-4">
                 <div className="space-y-1">
                   <label className={labelClass}>
-                    Mobile Number <span className="text-red-500">*</span>
+                    Mobile Number<span className="text-red-500"> *</span>
                   </label>
-                  <Input
-                    placeholder="(555) 000-0000"
-                    value={data.mobile}
-                    onChange={(e) => updateField('mobile', e.target.value)}
+                  <Controller
+                    name="mobile"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        placeholder="(555) 000-0000"
+                        {...field}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    )}
                   />
+                  {errors.mobile && <p className="text-xs text-red-500">{errors.mobile.message}</p>}
                 </div>
               </div>
             </div>
@@ -105,12 +132,22 @@ export const StaffEnrollContactSection = () => {
               </div>
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className={labelClass}>Personal Email *</label>
-                  <Input
-                    placeholder="john.doe@gmail.com"
-                    value={data.personalEmail}
-                    onChange={(e) => updateField('personalEmail', e.target.value)}
+                  <label className={labelClass}>Personal Email</label>
+                  <Controller
+                    name="personalEmail"
+                    control={control}
+                    render={({ field }) => (
+                      <Input
+                        placeholder="john.doe@gmail.com"
+                        {...field}
+                        value={field.value || ''}
+                        onChange={(e) => field.onChange(e.target.value)}
+                      />
+                    )}
                   />
+                  {errors.personalEmail && (
+                    <p className="text-xs text-red-500">{errors.personalEmail.message}</p>
+                  )}
                 </div>
               </div>
             </div>

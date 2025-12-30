@@ -9,10 +9,10 @@ export const StaffEnrollStep3Header = () => {
           <p className="text-sm font-semibold text-primary uppercase tracking-[0.3em]">Step 03</p>
           <h1 className="text-2xl font-bold text-foreground flex items-center gap-2">
             <MdContacts className="text-primary text-3xl" />
-            Contact & Emergency Details
+            Documents
           </h1>
           <p className="text-sm text-muted-foreground mt-1">
-            Please provide accurate communication details for the staff member.
+            Please upload the required documents for the staff member.
           </p>
         </div>
         <div className="flex gap-3 ml-auto">

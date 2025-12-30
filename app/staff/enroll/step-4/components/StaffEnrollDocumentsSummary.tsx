@@ -2,11 +2,17 @@
 import React from 'react';
 import Link from 'next/link';
 import { MdEdit, MdWarning, MdPhone, MdEmail, MdAttachFile } from 'react-icons/md';
-import { useStaffEnroll } from '../../context/StaffEnrollContext';
+import { Step1FormData, StaffDocument } from '../../schemas/staffEnrollmentSchema';
 
-export const StaffEnrollDocumentsSummary = () => {
-  const { data } = useStaffEnroll();
+interface StaffEnrollDocumentsSummaryProps {
+  data: Step1FormData;
+  documents: StaffDocument[];
+}
 
+export const StaffEnrollDocumentsSummary = ({
+  data,
+  documents,
+}: StaffEnrollDocumentsSummaryProps) => {
   return (
     <div className="bg-card rounded-lg shadow border border-border overflow-hidden">
       <div className="bg-muted/50 px-6 py-4 border-b border-border">
@@ -30,7 +36,7 @@ export const StaffEnrollDocumentsSummary = () => {
           <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">
             Emergency Contacts
           </h4>
-          {data.emergencyContacts.length === 0 ? (
+          {!data.emergencyContacts || data.emergencyContacts.length === 0 ? (
             <p className="text-sm text-muted-foreground">No emergency contacts added.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -63,11 +69,11 @@ export const StaffEnrollDocumentsSummary = () => {
           <h4 className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3 flex items-center gap-2">
             <MdAttachFile /> Documents
           </h4>
-          {data.documents.length === 0 ? (
+          {!documents || documents.length === 0 ? (
             <p className="text-sm text-muted-foreground">No documents uploaded.</p>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {data.documents.map((doc) => (
+              {documents.map((doc) => (
                 <div
                   key={doc.id}
                   className="flex items-center gap-2 p-3 border border-border rounded-lg bg-card/50"

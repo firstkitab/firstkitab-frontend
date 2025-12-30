@@ -34,7 +34,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   const login = () => {
-    window.location.href = `${config.serverUrl}/auth/login?next=http://localhost:3000`;
+    const nextUrl = `${window.location.origin}`;
+    window.location.href = `${config.serverUrl}/auth/login?next=${encodeURIComponent(nextUrl)}`;
   };
 
   const logout = async () => {

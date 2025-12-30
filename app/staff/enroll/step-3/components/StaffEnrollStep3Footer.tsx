@@ -1,12 +1,30 @@
+'use client';
 import React from 'react';
 import Link from 'next/link';
+import { useFormContext } from 'react-hook-form';
 import { MdArrowBack, MdArrowForward, MdSaveAs } from 'react-icons/md';
+import { step3Schema } from '../../schemas/staffEnrollmentSchema';
+import { z } from 'zod';
+import { useStaffEnroll } from '../../context/StaffEnrollContext';
+
+type Step3FormData = z.infer<typeof step3Schema>;
 
 export const StaffEnrollStep3Footer = () => {
+  const { updateStep3Data } = useStaffEnroll();
+  const { getValues } = useFormContext<Step3FormData>();
+
+  const handleNext = () => {
+    const data = getValues();
+    updateStep3Data(data);
+  };
+
   return (
     <>
       <div className="sticky bottom-0 z-10 w-full rounded bg-card/95 backdrop-blur border border-border p-4 shadow-xl flex justify-between items-center mt-2">
-        <button className="flex items-center gap-2 rounded border border-input bg-card px-5 py-2 text-sm font-bold text-muted-foreground hover:bg-muted hover:text-foreground transition-all shadow-sm">
+        <button
+          type="button"
+          className="flex items-center gap-2 rounded border border-input bg-card px-5 py-2 text-sm font-bold text-muted-foreground hover:bg-muted hover:text-foreground transition-all shadow-sm"
+        >
           <MdSaveAs className="text-lg" />
           Draft
         </button>
@@ -20,6 +38,7 @@ export const StaffEnrollStep3Footer = () => {
           </Link>
           <Link
             href="/staff/enroll/step-4"
+            onClick={handleNext}
             className="flex items-center gap-2 rounded bg-primary px-6 py-2 text-sm font-bold text-white shadow-md hover:bg-primary/90 transition-all hover:shadow-lg"
           >
             Next Step

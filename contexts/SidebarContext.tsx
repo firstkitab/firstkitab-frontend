@@ -1,6 +1,6 @@
 'use client';
 
-import { createContext, useContext, useState, useMemo } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { MAIN_NAV, SYSTEM_NAV } from '@/app/components/sidebar/sidebar.config';
 import { SidebarNavItem } from '@/app/components/sidebar/types';
@@ -23,9 +23,10 @@ const SidebarContext = createContext<SidebarContextType | undefined>(undefined);
 export function SidebarProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const [selectedItem, setSelectedItem] = useState<string>(pathname);
 
-  const selectedItem = useMemo(() => {
-    return pathname;
+  useEffect(() => {
+    setSelectedItem(pathname);
   }, [pathname]);
 
   const navSections: NavSection[] = [
@@ -35,7 +36,7 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 
   return (
     <SidebarContext.Provider
-      value={{ isOpen, setIsOpen, selectedItem, setSelectedItem: () => {}, navSections }}
+      value={{ isOpen, setIsOpen, selectedItem, setSelectedItem, navSections }}
     >
       {children}
     </SidebarContext.Provider>
