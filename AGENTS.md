@@ -1,5 +1,15 @@
 # AGENTS.md
 
+## Project Overview
+
+- **FirstKitab Frontend** - School management ERP built
+  with Next.js 16 (App Router), TypeScript 5, React 19
+- **Styling**: Tailwind CSS 4 with CSS variables, dark/light mode support
+- **UI Components**: shadcn/ui pattern using Radix UI primitives
+- **State Management**: React Context API (Auth, Sidebar, Theme,
+  Staff enrollment forms)
+- **API**: Auto-generated TypeScript client from OpenAPI spec
+
 ## Build/Lint/Test Commands
 
 - Build: `npm run build`
@@ -7,7 +17,27 @@
 - Format: `npm run format`
 - Format check: `npm run format:check`
 - Dev server: `npm run dev`
+- Generate API client: `npm run api:generate`
 - No test framework configured yet; add Jest/Vitest if needed.
+
+## Project Structure
+
+- `api/` - Auto-generated API client (never edit manually)
+- `app/` - Next.js App Router pages
+  - `dashboard/` - Dashboard page/layout
+  - `staff/` - Staff enrollment (step-1 through step-4) and list
+- `components/ui/` - shadcn/ui style components (auto-generated, don't edit)
+- `components/common/` - Shared components (ImageUploader)
+- `contexts/` - React Context providers (Auth, Sidebar, Theme, StaffEnroll)
+- `lib/` - Utility functions (`cn()` class merger)
+- `scripts/` - Build scripts (generate-api.mjs)
+- `types/` - TypeScript type definitions
+
+## Key Modules
+
+- **Authentication**: OAuth 2.1 + JWT, login/logout via AuthContext
+- **Staff Enrollment**: Multi-step wizard with localStorage persistence
+- **Dashboard**: Collapsible sidebar navigation with responsive design
 
 ## Code Style Guidelines
 
