@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const login = () => {
     const nextUrl = `${window.location.origin}`;
-    window.location.href = `${config.serverUrl}/auth/login?next=${encodeURIComponent(nextUrl)}`;
+    window.location.href = `${config.serverUrl}/api/v1/auth/login?next=${encodeURIComponent(nextUrl)}`;
   };
 
   const logout = async () => {

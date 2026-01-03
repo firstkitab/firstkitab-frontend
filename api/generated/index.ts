@@ -67,6 +67,7 @@ export type { studentStudentUser } from './models/studentStudentUser';
 export type { studentStudentUserAddress } from './models/studentStudentUserAddress';
 export type { StudentUpdateSchema } from './models/StudentUpdateSchema';
 export type { User } from './models/User';
+export type { UserResponse } from './models/UserResponse';
 export type { UserUpdateSchema } from './models/UserUpdateSchema';
 export type { userUser } from './models/userUser';
 export type { userUserAddress } from './models/userUserAddress';

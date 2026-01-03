@@ -2,6 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { UserResponse } from '../models/UserResponse';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { OpenAPI } from '../core/OpenAPI';
 import { request as __request } from '../core/request';
@@ -33,7 +34,7 @@ export class AuthService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/auth/login',
+            url: '/api/v1/auth/login',
             query: {
                 'next': next,
             },
@@ -73,7 +74,7 @@ export class AuthService {
     }): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/auth/callback',
+            url: '/api/v1/auth/callback',
             query: {
                 'code': code,
                 'state': state,
@@ -99,7 +100,7 @@ export class AuthService {
     public static logout(): CancelablePromise<any> {
         return __request(OpenAPI, {
             method: 'POST',
-            url: '/auth/logout',
+            url: '/api/v1/auth/logout',
         });
     }
     /**
@@ -121,7 +122,26 @@ export class AuthService {
     public static isAuthenticated(): CancelablePromise<Record<string, boolean>> {
         return __request(OpenAPI, {
             method: 'GET',
-            url: '/auth/is-authenticated',
+            url: '/api/v1/auth/is-authenticated',
+        });
+    }
+    /**
+     * Get User Info
+     * Get current user information from token.
+     *
+     * This endpoint:
+     * 1. Extracts user information from the JWT token
+     * 2. Returns name and email
+     *
+     * Returns:
+     * JSON response with user email
+     * @returns UserResponse Successful Response
+     * @throws ApiError
+     */
+    public static listUser(): CancelablePromise<UserResponse> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/v1/auth/user',
         });
     }
 }

@@ -18,11 +18,12 @@ export const SCHEMA_NAME_MAP = {
  */
 export const OPERATION_NAME_MAP = {
   // Auth
-  'GET /auth/login': 'login',
-  'GET /auth/callback': 'handleCallback',
-  'POST /auth/logout': 'logout',
-  'GET /auth/is-authenticated': 'isAuthenticated',
+  'GET /api/v1/auth/login': 'login',
+  'GET /api/v1/auth/callback': 'handleCallback',
+  'POST /api/v1/auth/logout': 'logout',
+  'GET /api/v1/auth/is-authenticated': 'isAuthenticated',
   'POST /api/v1/schools/{school_id}/students/{student_id}:list-guardians': 'listStudentGuardians',
+  'GET /api/v1/auth/user': 'getUser',
 };
 
 /**
