@@ -10,6 +10,8 @@ import { StaffEnrollSubmissionPanel } from './components/StaffEnrollSubmissionPa
 import { StaffEnrollApplicationTimeline } from './components/StaffEnrollApplicationTimeline';
 import { useStaffEnroll } from '../context/StaffEnrollContext';
 
+export const dynamic = 'force-static';
+
 export default function StaffEnrollStep4() {
   const { step1Data, step2Data, step3Data, resetForm } = useStaffEnroll();
 

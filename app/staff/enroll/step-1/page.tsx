@@ -9,6 +9,8 @@ import { StaffEnrollPersonalForm } from './components/StaffEnrollPersonalForm';
 import { StaffEnrollFooter } from './components/StaffEnrollFooter';
 import { useStaffEnroll } from '../context/StaffEnrollContext';
 
+export const dynamic = 'force-static';
+
 export default function EnrollStaffPage() {
   const { step1Data, updateStep1Data } = useStaffEnroll();
   const [mounted, setMounted] = React.useState(false);

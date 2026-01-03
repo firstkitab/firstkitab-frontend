@@ -10,6 +10,8 @@ import { MdSearch, MdGroups, MdApartment, MdEventAvailable, MdInsights } from 'r
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
+export const dynamic = 'force-static';
+
 const statusStyles: Record<string, string> = {
   active:
     'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/30 dark:text-green-400 dark:border-green-800',
